@@ -611,13 +611,24 @@ const ADMIN_PASS = '1234';
 const STORE_KEY  = 'maktab26_v4';
 
 const DEFAULT_DATA = {
-  students: 720, staff: 54, rooms: 28, capacity: 1000, images: []
+  students: 720, staff: 54, rooms: 28, capacity: 1000,
+  images: [
+    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_2_2026-02-18_11-37-07.jpg',
+    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_1_2026-02-18_11-37-07.jpg',
+    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_3_2026-02-18_11-37-07.jpg'
+  ]
 };
 
 function loadData() {
   try {
     const r = localStorage.getItem(STORE_KEY);
-    return r ? { ...DEFAULT_DATA, ...JSON.parse(r) } : { ...DEFAULT_DATA };
+    if (!r) return { ...DEFAULT_DATA };
+    const saved = JSON.parse(r);
+    // Agar saqlangan rasmlar bo'sh bo'lsa, default rasmlarni ishlatamiz
+    if (!saved.images || saved.images.length === 0) {
+      saved.images = DEFAULT_DATA.images;
+    }
+    return { ...DEFAULT_DATA, ...saved };
   } catch { return { ...DEFAULT_DATA }; }
 }
 function saveData(d) {
