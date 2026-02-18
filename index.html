@@ -611,11 +611,11 @@ const ADMIN_PASS = '1234';
 const STORE_KEY  = 'maktab26_v4';
 
 const DEFAULT_DATA = {
-  students: 720, staff: 54, rooms: 28, capacity: 1000,
+  students: 936, staff: 66, rooms: 32, capacity: 1000,
   images: [
-    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_2_2026-02-18_11-37-07.jpg',
-    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_1_2026-02-18_11-37-07.jpg',
-    'https://raw.githubusercontent.com/smamatov637-stack/margilon-26-maktab/main/photo_3_2026-02-18_11-37-07.jpg'
+    'https://i.ibb.co/sdQpJkkP/photo-2-2026-02-18-11-37-07.jpg',
+    'https://i.ibb.co/JFn1BZ6H/photo-1-2026-02-18-11-37-07.jpg',
+    'https://i.ibb.co/60LHCcWr/photo-3-2026-02-18-11-37-07.jpg'
   ]
 };
 
@@ -624,7 +624,7 @@ function loadData() {
     const r = localStorage.getItem(STORE_KEY);
     if (!r) return { ...DEFAULT_DATA };
     const saved = JSON.parse(r);
-    // Agar saqlangan rasmlar bo'sh bo'lsa, default rasmlarni ishlatamiz
+    // Agar saqlangan rasmlar yo'q bo'lsa, default rasmlar ishlatilsin
     if (!saved.images || saved.images.length === 0) {
       saved.images = DEFAULT_DATA.images;
     }
@@ -754,7 +754,11 @@ function renderGallery(images) {
 
   sliderTrack.innerHTML = images.map((src, i) =>
     `<div class="slide" role="listitem">
-       <img src="${src}" alt="Marg'ilon 26-son maktab binosi rasmi ${i+1}" loading="lazy"/>
+       <img src="${src}"
+            alt="Marg'ilon 26-son maktab binosi rasmi ${i+1}"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'460\' viewBox=\'0 0 800 460\'><rect width=\'800\' height=\'460\' fill=\'%231a2236\'/><text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-size=\'18\'>${i+1}-rasm yuklanmadi</text></svg>';"
+       />
      </div>`
   ).join('');
 
